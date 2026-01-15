@@ -36,7 +36,7 @@ Zu den adressierten Fehlertypen gehören:
 ---
 
 ## 🚀 Technologie-Stack
-- **Programmiersprache:** Python (Hauptimplementierung)
+- **Programmiersprache:** C++ (Hauptimplementierung)
 - **KI-Modelle:** OpenAI ChatGPT, Anthropic Claude, Mistral
 - **Debugging-Tools:** Valgrind, gdb
 - **Versionsverwaltung:** Git & GitHub
