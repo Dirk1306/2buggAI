@@ -89,10 +89,6 @@ void ArgumentParser::parse(int argc, char* argv[]){
         if (fixDescription.empty()) {
             throw std::invalid_argument("Fix description is required.");
         }
-
-        if (fileExtensions.empty()) {
-            fileExtensions = {".cpp", ".h", ".hpp", ".cxx"};
-        }
     }
 
     std::string ArgumentParser::getTargetPath() const {
@@ -141,7 +137,7 @@ void ArgumentParser::parse(int argc, char* argv[]){
         std::cout << "  -f, --fix           Beschreibung was gefixt werden soll\n";
         std::cout << "  -r, --recursive     Durchsuche Unterordner rekursiv\n";
         std::cout << "  -v, --verbose       Zeige detaillierte Ausgaben\n";
-        std::cout << "  -e, --extensions    Dateiendungen (Standard: .cpp,.h,.hpp,.c)\n";
+        std::cout << "  -e, --extensions    Dateiendungen\n";
         std::cout << "                      Beispiel: -e .cpp,.h,.txt\n";
         std::cout << "  -h, --help          Zeige diese Hilfe\n\n";
     }
