@@ -1,8 +1,8 @@
-#include "/home/nikog/projects/2_buggy_AI/includes/argumentParser.h"
-#include "/home/nikog/projects/2_buggy_AI/includes/OpenAiClient.h"
-#include "/home/nikog/projects/2_buggy_AI/includes/ReportJson.h"
-#include "/home/nikog/projects/2_buggy_AI/includes/GdbRunner.h"
-#include "/home/nikog/projects/2_buggy_AI/includes/ValgrindRunner.h"
+#include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/argumentParser.h"
+#include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/OpenAiClient.h"
+#include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/ReportJson.h"
+#include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/GdbRunner.h"
+#include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/ValgrindRunner.h"
 #include <fstream>
 #include <iostream>
 

@@ -9,7 +9,7 @@ std::string quote(const std::string& s) {
     out += '\'';
     for (char c : s) {
         if (c == '\'') {
-            // beendet quote, escaped ', startet quote neu:  ' \'' '
+            // beendet quote, escaped, startet quote neu
             out += "'\\''";
         } else {
             out += c;
@@ -29,4 +29,4 @@ std::string buildCommand(const std::string& program,
     return cmd;
 }
 
-} // namespace ShellQuote
+} 

@@ -7,7 +7,7 @@
 
 using nlohmann::json;
 
-// erste Zeile finden, die einen bestimmten Text enthält (z.B. "Program received signal")
+// erste Zeile finden, die einen bestimmten Text enthält
 static std::string first_line_containing(const std::string& text, const std::string& needle) {
     auto pos = text.find(needle);
     if (pos == std::string::npos) return "";
@@ -21,7 +21,7 @@ static std::string first_line_containing(const std::string& text, const std::str
     return text.substr(start, end - start);
 }
 
-// Block zwischen zwei Markern ausschneiden (z.B. "LEAK SUMMARY:" bis "ERROR SUMMARY:")
+// Block zwischen zwei Markern ausschneiden 
 static std::string extract_block(const std::string& text,
                                  const std::string& startNeedle,
                                  const std::string& endNeedle,
@@ -37,7 +37,7 @@ static std::string extract_block(const std::string& text,
     return block;
 }
 
-// große Outputs für API kürzen (behält Anfang + Ende)
+// große Outputs für API kürzen 
 static std::string truncate_middle(const std::string& s, size_t maxBytes = 200000) {
     if (s.size() <= maxBytes) return s;
 
@@ -70,9 +70,7 @@ std::string make_report_json(
         {"passthrough_args", passthrough}
     };
 
-    // -------------------------
     // GDB (optional) + Summary
-    // -------------------------
     if (gdb) {
         // Signal/Stop-Reason Zeile (falls vorhanden)
         std::string signalLine = first_line_containing(gdb->output, "Program received signal");
@@ -100,9 +98,8 @@ std::string make_report_json(
         j["gdb_summary"] = nullptr;
     }
 
-    // ------------------------------
     // Valgrind (optional) + Summary
-    // ------------------------------
+
     if (vg) {
         // Wichtige Valgrind-Zeilen/Blöcke extrahieren
         std::string errSummary = first_line_containing(vg->run.output, "ERROR SUMMARY:");
