@@ -19,12 +19,12 @@ static std::string getenv_or(const char* key, const char* def) {
 }
 
 static std::string extract_text_best_effort(const json& resp) {
-    // 1) falls die API ein output_text Feld liefert (kommt häufig vor, siehe Guides)
+    // falls die API ein output_text Feld liefert
     if (resp.contains("output_text") && resp["output_text"].is_string()) {
         return resp["output_text"].get<std::string>();
     }
 
-    // 2) best effort: durchs "output" Array laufen und Text einsammeln
+    // durchs "output" Array laufen und Text einsammeln
     std::string out;
     if (resp.contains("output") && resp["output"].is_array()) {
         for (const auto& item : resp["output"]) {
@@ -63,11 +63,10 @@ OpenAIClient::OpenAIClient() {
 
 OpenAIResult OpenAIClient::debug_report(const std::string& report_json) const {
     // Request für POST /v1/responses
-    // (Responses API: model + input + optional instructions) :contentReference[oaicite:4]{index=4}
     json req;
     req["model"] = model_;
     req["instructions"] =
-        "Du bist ein Senior C/C++ Debugger. Analysiere das JSON (GDB/Valgrind/Config). "
+        "Du bist ein Senior Debugger. Analysiere das JSON (GDB/Valgrind/Config). "
         "Gib mir: (1) wahrscheinlichste Ursache, (2) Belege aus Output, (3) konkrete Fix-Schritte. "
         "Antwort auf Deutsch.";
     req["input"] =

@@ -12,5 +12,6 @@ std::string make_report_json(
     const std::vector<std::string>& exts,
     const std::vector<std::string>& passthrough,
     const RunResult* gdb,
-    const ValgrindResult* vg
+    const ValgrindResult* vg,
+    const RunResult* plain_run
 );

@@ -3,6 +3,8 @@
 #include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/ReportJson.h"
 #include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/GdbRunner.h"
 #include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/ValgrindRunner.h"
+#include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/ProcessRunner.h"
+#include "/home/nikog/projects/2_buggy_AI/2buggAI/2_buggy_AI/includes/ShellQuote.h"
 #include <fstream>
 #include <iostream>
 
@@ -34,6 +36,23 @@ int main(int argc, char** argv) {
             vgPtr = &vgRes;
         }
 
+        // Optional: normaler Run (wenn weder GDB noch Valgrind aktiv ist)
+        RunResult runRes;
+        RunResult* runPtr = nullptr;
+
+        if (!parser.isGdbUsed() && !parser.isValgrindUsed()) {
+            // Timeout, damit echte Deadlocks nicht ewig hängen
+            // (timeout ist ein externes Tool; auf Ubuntu ist es normalerweise vorhanden)
+            std::string cmd = "timeout 5s " + ShellQuote::quote(program);
+            for (const auto& a : passArgs) {
+                cmd += " ";
+                cmd += ShellQuote::quote(a);
+            }
+
+            runRes = run_capture(cmd);
+            runPtr = &runRes;
+        }
+
         // Report JSON bauen
         std::string report = make_report_json(
             parser.getTargetPath(),
@@ -43,7 +62,8 @@ int main(int argc, char** argv) {
             parser.getFileExtensions(),
             parser.getPassthroughArgs(),
             gdbPtr,
-            vgPtr
+            vgPtr,
+            runPtr
         );
 
         // Optional: JSON in Datei schreiben

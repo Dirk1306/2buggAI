@@ -1,4 +1,3 @@
-// ReportJson.cpp
 #include "ReportJson.h"
 #include <nlohmann/json.hpp>
 
@@ -53,7 +52,8 @@ std::string make_report_json(
     const std::vector<std::string>& exts,
     const std::vector<std::string>& passthrough,
     const RunResult* gdb,
-    const ValgrindResult* vg
+    const ValgrindResult* vg,
+    const RunResult* plain_run  
 ) {
     json j;
 
@@ -130,6 +130,22 @@ std::string make_report_json(
         j["valgrind"] = nullptr;
         j["valgrind_summary"] = nullptr;
     }
+
+        // Normaler Run (optional)
+    if (plain_run) {
+        const auto orig = plain_run->output.size();
+        std::string out = truncate_middle(plain_run->output, 200000);
+
+        j["run"] = {
+            {"exit_code", plain_run->exit_code},
+            {"output", out},
+            {"output_original_bytes", orig},
+            {"output_truncated", out.size() != orig}
+        };
+    } else {
+        j["run"] = nullptr;
+    }
+
 
     return j.dump(2);
 }
