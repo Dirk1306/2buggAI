@@ -72,7 +72,7 @@ OpenAIResult OpenAIClient::debug_report(const std::string& report_json) const {
     req["input"] =
         "Hier ist der Report als JSON:\n\n" + report_json +
         "\n\nBitte analysieren und den Fehler erklären + Fix vorschlagen.";
-    req["max_output_tokens"] = 2000;
+    req["max_output_tokens"] = 4000;
 
     const std::string url = base_url_ + "/v1/responses";
     const std::string payload = req.dump();

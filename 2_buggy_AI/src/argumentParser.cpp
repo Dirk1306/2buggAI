@@ -69,10 +69,10 @@ void ArgumentParser::parse(int argc, char* argv[]){
                 for (int j = i + 1; j < argc; ++j) passthroughArgs.push_back(argv[j]);
                 break;
                 
-            } else if(targetPath.empty() && arg[0] == '-') {
+            } else if(targetPath.empty() && arg[0] != '-') {
                 targetPath = arg;
             }
-            else if (fixDescription.empty() && arg[0] == '-') {
+            else if (fixDescription.empty() && arg[0] != '-') {
                 fixDescription = arg;
             }
 
@@ -139,6 +139,10 @@ void ArgumentParser::parse(int argc, char* argv[]){
         std::cout << "  -v, --verbose       Zeige detaillierte Ausgaben\n";
         std::cout << "  -e, --extensions    Dateiendungen\n";
         std::cout << "                      Beispiel: -e .cpp,.h,.txt\n";
+        std::cout << "  --gdb               Nutze GDB für Crash-Analyse\n";
+        std::cout << "  --valgrind          Nutze Valgrind für Memory-Check\n";
+        std::cout << "  --json-out <file>   Speichere JSON-Report in Datei\n";
+        std::cout << "  --                  Argumente nach -- werden an das Programm übergeben\n";
         std::cout << "  -h, --help          Zeige diese Hilfe\n\n";
     }
 

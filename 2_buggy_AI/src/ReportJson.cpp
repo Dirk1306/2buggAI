@@ -53,7 +53,8 @@ std::string make_report_json(
     const std::vector<std::string>& passthrough,
     const RunResult* gdb,
     const ValgrindResult* vg,
-    const RunResult* plain_run  
+    const RunResult* plain_run, 
+    const std::string& sourceCode
 ) {
     json j;
 
@@ -69,6 +70,28 @@ std::string make_report_json(
         {"extensions", exts},
         {"passthrough_args", passthrough}
     };
+
+    // Source Code
+    if (!sourceCode.empty()) {
+        // Kürze sehr große Dateien
+        std::string content = sourceCode;
+        size_t max_size = 50000;  // 50KB
+        bool truncated = false;
+        
+        if (content.size() > max_size) {
+            content = content.substr(0, max_size) + "\n...<source truncated>...";
+            truncated = true;
+        }
+        
+        j["source_code"] = {
+            {"path", targetPath},
+            {"content", content},
+            {"size_bytes", sourceCode.size()},
+            {"truncated", truncated}
+        };
+    } else {
+        j["source_code"] = nullptr;
+    }
 
     // GDB (optional) + Summary
     if (gdb) {
